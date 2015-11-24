@@ -36,6 +36,13 @@ public class IO {
 		return new JSONObject(new String(content));
 	}
 	
+	/**
+	 * 从图片文件读取图片
+	 * @param path 文件存放的路径。
+	 * 首先作为基于res/data目录的相对路径查找，若没有，则作为绝对路径查找
+	 * @return 读取的BufferedImage对象
+	 * @throws IOException 没有找到该文件
+	 */
 	public static BufferedImage read_image(String path) {
 		File img_file = new File(Preferences.RES_FOLDER + "images/" + path);
 		if(!img_file.exists()) {

@@ -18,9 +18,6 @@ public class MainCanvas extends JPanel {
 	}
 	
 	public void paintCanvas(Graphics2D g2d) {
-		//g2d.setColor(Color.GRAY);
-		//g2d.fillRect(0, 0, getWidth(), getHeight());
-		
 		g2d.scale(Preferences.SCALE, Preferences.SCALE);
 		
 		Scene scene = Game.getInstance().getCurrentScene();

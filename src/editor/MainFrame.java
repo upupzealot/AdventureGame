@@ -1,7 +1,9 @@
-package gui;
+package editor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
+import gui.StandaloneWindow;
 
 import util.Preferences;
 
@@ -22,18 +24,13 @@ public class MainFrame extends StandaloneWindow{
 	
 	/**
 	 * 布局
-	 * 指定显示区域的尺寸
-	 * 在中央插入MainCanvas
+	 * 在中央插入MapCanvas
 	 */
 	@Override
 	protected void Layout() {
-		Dimension size = new Dimension(
-			Preferences.WINDOW_GRID_WIDTH * Preferences.GRID_SIZE * Preferences.SCALE,
-			Preferences.WINDOW_GRID_HEIGHT * Preferences.GRID_SIZE * Preferences.SCALE
-		);
-		setPreferredSize(size);
+		setTitle("地图编辑器");
 		
-		add(new MainCanvas(), BorderLayout.CENTER);
+		add(MapPanel.getInstance(), BorderLayout.CENTER);
 	}
 	
 	/**

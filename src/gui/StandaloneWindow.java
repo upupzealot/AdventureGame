@@ -1,6 +1,5 @@
 package gui;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -18,35 +17,23 @@ public abstract class StandaloneWindow extends JFrame{
 		//EXIT_ON_CLOSE
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		//默认窗口尺寸
-		setSize(getInitailSize());
-		setMinimumSize(getSize());
-		
-		//居中显示窗口
-		pack();
-		MakeCenter(this);
-		setVisible(true);
-		
 		//可以获取焦点
 		setFocusable(true);
 		
 		//默认采用BorderLayout
 		setLayout(new BorderLayout());
 		Layout();
+		
+		//居中显示窗口
+		pack();
+		MakeCenter(this);
+		setVisible(true);
 	}
 	
 	/**
 	 * 布局方法
 	 */
 	protected abstract void Layout();
-	
-	/**
-	 * 获取初始化窗口尺寸
-	 * @return 初始化窗口尺寸
-	 */
-	protected Dimension getInitailSize() {
-		return new Dimension(600, 400);
-	}
 	
 	/**
 	 * 使某个窗口在屏幕可视区域内居中
