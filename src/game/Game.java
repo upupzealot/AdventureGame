@@ -1,9 +1,5 @@
 package game;
 
-import java.awt.Dimension;
-
-import gui.MainFrame;
-
 public class Game {
 	private static Game instance;
 	/**

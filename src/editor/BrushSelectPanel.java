@@ -8,16 +8,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import quick_component.QuickToggleButton;
 import quick_component.WrapLayout;
 import util.Preferences;
 
 @SuppressWarnings("serial")
-public class TileSelectPanel extends JPanel{
-	public TileSelectPanel() {
+public class BrushSelectPanel extends JPanel{
+	public BrushSelectPanel() {
 		WrapLayout layout = new WrapLayout(FlowLayout.LEFT, 8, 16);
 		layout.setAlignOnBaseline(true);
 		setLayout(layout);
@@ -30,7 +30,9 @@ public class TileSelectPanel extends JPanel{
 				BufferedImage image;
 				try {
 					image = ImageIO.read(file);
-					JToggleButton button = new JToggleButton(new ImageIcon(image)) {
+					String name = file.getName();
+					name = name.substring(0, name.lastIndexOf('.'));
+					JToggleButton button = new BrushSelectButton(name, image) {
 						@Override
 						public int getBaseline(int width, int height) {
 							return height;
@@ -38,11 +40,31 @@ public class TileSelectPanel extends JPanel{
 					};
 					group.add(button);
 					add(button);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} catch (IOException e) { e.printStackTrace(); }
 			}
+		}
+		
+		if(getComponents().length > 0) {
+			((JToggleButton)getComponents()[0]).setSelected(true);
+		}
+	}
+	
+	private BufferedImage image = null;
+	public BufferedImage getCurrentImage() {
+		return image;
+	}
+	
+	class BrushSelectButton extends QuickToggleButton {
+		Brush brush;
+		BrushSelectButton(String name, BufferedImage icon) {
+			super(icon);
+			brush = new Brush(name, icon);
+			setToolTipText(name);
+		}
+		
+		@Override
+		public void onSelected() {
+			BrushPanel.getInstance().setBrush(brush);
 		}
 	}
 }

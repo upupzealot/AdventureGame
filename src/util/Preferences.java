@@ -12,7 +12,7 @@ public class Preferences {
 	/**
 	 * 地图栅格大小（像素）
 	 */
-	public static int GRID_SIZE;
+	public static int GRID_SIZE = 16;
 	/**
 	 * 整体的像素粒度
 	 */
@@ -33,7 +33,6 @@ public class Preferences {
 	 */
 	public static void read() throws JSONException, IOException {
 		JSONObject preferences = IO.read_json_object("/prefrences.json");
-		GRID_SIZE = preferences.getInt("GRID_SIZE");
 		SCALE = preferences.getInt("SCALE");
 		WINDOW_GRID_WIDTH = preferences.getInt("WINDOW_GRID_WIDTH");
 		WINDOW_GRID_HEIGHT = preferences.getInt("WINDOW_GRID_HEIGHT");

@@ -12,14 +12,14 @@ import util.Preferences;
 @SuppressWarnings("serial")
 public class MapCanvas extends JPanel{
 	
-	private int grid_width;
-	private int grid_height;
-	private int grid_size = Preferences.GRID_SIZE;
+	int grid_width;
+	int grid_height;
+	int grid_size = Preferences.GRID_SIZE;
 	
-	private int width;
-	private int height;
+	int width;
+	int height;
 	
-	public MapCanvas(int grid_width, int grid_height) {
+	MapCanvas(int grid_width, int grid_height) {
 		this.grid_width = grid_width;
 		this.grid_height = grid_height;
 		

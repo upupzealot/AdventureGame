@@ -35,13 +35,4 @@ public class MainFrame extends StandaloneWindow{
 		
 		add(new MainCanvas(), BorderLayout.CENTER);
 	}
-	
-	/**
-	 * 获取初始化窗口尺寸
-	 * @return 初始化窗口尺寸
-	 */
-	protected Dimension getInitailSize() {
-		int scale = Preferences.GRID_SIZE * Preferences.SCALE;
-		return new Dimension(Preferences.WINDOW_GRID_WIDTH * scale, Preferences.WINDOW_GRID_HEIGHT * scale);
-	}
 }

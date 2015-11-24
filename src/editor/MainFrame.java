@@ -1,11 +1,8 @@
 package editor;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import gui.StandaloneWindow;
-
-import util.Preferences;
 
 @SuppressWarnings("serial")
 public class MainFrame extends StandaloneWindow{
@@ -31,14 +28,5 @@ public class MainFrame extends StandaloneWindow{
 		setTitle("地图编辑器");
 		
 		add(MapPanel.getInstance(), BorderLayout.CENTER);
-	}
-	
-	/**
-	 * 获取初始化窗口尺寸
-	 * @return 初始化窗口尺寸
-	 */
-	protected Dimension getInitailSize() {
-		int scale = Preferences.GRID_SIZE * Preferences.SCALE;
-		return new Dimension(Preferences.WINDOW_GRID_WIDTH * scale, Preferences.WINDOW_GRID_HEIGHT * scale);
 	}
 }

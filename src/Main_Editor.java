@@ -1,3 +1,5 @@
+import java.awt.EventQueue;
+
 import javax.swing.UIManager;
 
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
@@ -15,20 +17,17 @@ public class Main_Editor {
 			Preferences.read();
 		} catch (Exception e) { e.printStackTrace(); }
 		
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
     		public void run() {
     			MainFrame.getInstance();
 				Game.getInstance().setScene(new Scene(20, 16));
     			
     			try {
     				String LookAndFeelName = "Dust";
-    				//String LookAndFeelName = "Twilight";
+    				
     				UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.Substance" + LookAndFeelName + "LookAndFeel");
     				SubstanceLookAndFeel.setSkin("org.pushingpixels.substance.api.skin." + LookAndFeelName + "Skin");
-    				//System.err.close();
-    			} catch(Exception e) {
-    				e.printStackTrace();
-    			}
+    			} catch(Exception e) { e.printStackTrace(); }
     		}
 		});
 	}
