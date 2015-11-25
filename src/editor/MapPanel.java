@@ -9,8 +9,6 @@ import javax.swing.border.TitledBorder;
 
 import quick_component.BorderPanel;
 
-import util.Preferences;
-
 @SuppressWarnings("serial")
 public class MapPanel extends BorderPanel {
 	private static MapPanel instance = null;
@@ -30,7 +28,7 @@ public class MapPanel extends BorderPanel {
 		paint_panel.add(brush_panel, BorderLayout.SOUTH);
 		add(paint_panel, BorderLayout.WEST);
 		
-		add(new MapCanvas(Preferences.WINDOW_GRID_WIDTH, Preferences.WINDOW_GRID_HEIGHT), BorderLayout.CENTER);
+		add(MapCanvas.getInstance(), BorderLayout.CENTER);
 		
 		JScrollPane scroll = new JScrollPane(new BrushSelectPanel());
 		scroll.setPreferredSize(new Dimension(0, 200));

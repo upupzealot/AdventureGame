@@ -7,7 +7,11 @@ public class Cell {
 		this.tile_name = tile_name;
 	}
 	
-	public String getTile() {
+	public String getTileName() {
 		return tile_name;
+	}
+	
+	public void setTileName(String tile_name) {
+		this.tile_name = tile_name;
 	}
 }

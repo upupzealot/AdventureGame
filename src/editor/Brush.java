@@ -14,7 +14,7 @@ public class Brush {
 	
 	static final int SCALE = 2;
 	
-	public Brush(String name, BufferedImage image) {
+	Brush(String name, BufferedImage image) {
 		this.name = name;
 		this.image = image;
 		
@@ -22,12 +22,16 @@ public class Brush {
 		GRID_HEIGHT = (image.getHeight() + 1) / (Preferences.GRID_SIZE + 1);
 	}
 	
-	public BufferedImage getTileImage() {
+	BufferedImage getTileImage() {
 		return image.getSubimage(
 			(Preferences.GRID_SIZE + 1) * tile_x,
 			(Preferences.GRID_SIZE + 1) * tile_y,
 			Preferences.GRID_SIZE,
 			Preferences.GRID_SIZE
 		);
+	}
+	
+	String getTileName() {
+		return name + "-" + tile_x + "-" + tile_y;
 	}
 }

@@ -1,5 +1,6 @@
-import javax.swing.JFrame;
+import java.awt.EventQueue;
 
+import javax.swing.JFrame;
 import game.Game;
 import game.Scene;
 import gui.MainFrame;
@@ -12,8 +13,12 @@ public class Main_Game {
 			Preferences.read();
 		} catch (Exception e) { e.printStackTrace(); }
 		
-		JFrame main = MainFrame.getInstance();
-		Game.getInstance().setScene(new Scene(20, 16));
-		StandaloneWindow.MakeCenter(main);
+		EventQueue.invokeLater(new Runnable() {
+    		public void run() {
+    			JFrame main = MainFrame.getInstance();
+    			Game.getInstance().setScene(new Scene(20, 16));
+    			StandaloneWindow.MakeCenter(main);
+    		}
+		});
 	}
 }
