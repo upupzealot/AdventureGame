@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 
 import game.Cell;
 import game.Scene;
+import game.Scene.Layer;
 import util.Preferences;
 
 @SuppressWarnings("serial")
@@ -21,7 +23,7 @@ public class MapCanvas extends JPanel{
 	private static MapCanvas instance;
 	/**
 	 * 获得MapCanvas单例实例
-	 * @return Game单例
+	 * @return MapCanvas单例
 	 */
 	static MapCanvas getInstance() {
 		if(instance == null) {
@@ -47,17 +49,18 @@ public class MapCanvas extends JPanel{
 		
 		setPreferredSize(new Dimension(width * Brush.SCALE + 16, height * Brush.SCALE + 16));
 		addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					onDraw(e);
+				}
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					onDraw(e);
+				}
 			}
 			
 			@Override
@@ -74,6 +77,21 @@ public class MapCanvas extends JPanel{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					onDraw(e);
+				}
+			}
+		});
+		addMouseMotionListener(new MouseMotionAdapter() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
 				onDraw(e);
 			}
 		});
@@ -85,16 +103,18 @@ public class MapCanvas extends JPanel{
 		x /= Brush.SCALE;	x /= Preferences.GRID_SIZE;
 		y /= Brush.SCALE;	y /= Preferences.GRID_SIZE;
 		if(x < grid_width && y < grid_height) {
-			Cell cell = scene.getCellAt(x, y);
+			Cell cell = scene.getLayer(LayerPanel.getCurrentLayer()).getCellAt(x, y);
 			Brush brush = BrushPanel.getInstance().brush;
 			String tile_name = brush.getTileName();
-			Map<String, BufferedImage> tile_set = scene.getTileSet();
-			if(!tile_set.keySet().contains(tile_name)) {
-				tile_set.put(tile_name, brush.getTileImage());
+			if(tile_name != null && !tile_name.equals(cell.getTileName())) {
+				Map<String, BufferedImage> tile_set = scene.getTileSet();
+				if(!tile_set.keySet().contains(tile_name)) {
+					tile_set.put(tile_name, brush.getTileImage());
+				}
+				cell.setTileName(tile_name);
+				
+				repaint();
 			}
-			cell.setTileName(tile_name);
-			
-			repaint();
 		}
 	}
 	
@@ -124,11 +144,14 @@ public class MapCanvas extends JPanel{
 		}
 		
 		Map<String, BufferedImage> tile_set = scene.getTileSet();
+		for(int l = 0; l < scene.getLayerCount(); l++) {
+			Layer layer = scene.getLayer(l);
 		for(int i = 0; i < grid_width; i++) {
-			for(int j = 0; j < grid_height; j++) {
-				BufferedImage tile_image = tile_set.get(scene.getCellAt(i, j).getTileName());
-				if(tile_image != null)
-				g2d.drawImage(tile_image, i * Preferences.GRID_SIZE, j * Preferences.GRID_SIZE, null);
-			}}
+		for(int j = 0; j < grid_height; j++) {
+				Cell cell = layer.getCellAt(i, j);
+				if(cell != null) {
+					g2d.drawImage(tile_set.get(cell.getTileName()), i * Preferences.GRID_SIZE, j * Preferences.GRID_SIZE, null);
+				}
+		}}}
 	}
 }

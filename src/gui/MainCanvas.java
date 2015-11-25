@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import game.Game;
 import game.Scene;
+import game.Scene.Layer;
 import util.Preferences;
 
 @SuppressWarnings("serial")
@@ -28,9 +29,14 @@ public class MainCanvas extends JPanel {
 		int width = scene.getWidth();
 		Map<String, BufferedImage> tile_set = scene.getTileSet();
 		
+		for(int l = 0; l < scene.getLayerCount(); l++) {
+			Layer layer = scene.getLayer(l);
 		for(int i = 0; i < width; i++) {
 		for(int j = 0; j < height; j++) {
-			g2d.drawImage(tile_set.get(scene.getCellAt(i, j).getTileName()), i * Preferences.GRID_SIZE, j * Preferences.GRID_SIZE, null);
-		}}
+			BufferedImage image = tile_set.get(layer.getCellAt(i, j).getTileName());
+			if(image != null) {
+				g2d.drawImage(image, i * Preferences.GRID_SIZE, j * Preferences.GRID_SIZE, null);
+			}
+		}}}
 	}
 }

@@ -10,6 +10,11 @@ import javax.swing.JToggleButton;
 
 @SuppressWarnings("serial")
 public class QuickToggleButton extends JToggleButton{
+	public QuickToggleButton(String name) {
+		super(name);
+		init();
+	}
+	
 	public QuickToggleButton(Icon icon) {
 		super(icon);
 		init();

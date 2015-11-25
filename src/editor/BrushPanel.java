@@ -14,7 +14,7 @@ public class BrushPanel extends BorderPanel{
 	private static BrushPanel instance;
 	/**
 	 * 获得BrushPanel单例实例
-	 * @return Game单例
+	 * @return BrushPanel单例
 	 */
 	static BrushPanel getInstance() {
 		if(instance == null) {
@@ -27,17 +27,19 @@ public class BrushPanel extends BorderPanel{
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int x = e.getX() - x_offset;
-				int y = e.getY() - y_offset;
-				x /= Brush.SCALE;
-				y /= Brush.SCALE;
-				if(x % Preferences.GRID_SIZE != 0 && y % Preferences.GRID_SIZE != 0) {
-					x /= (Preferences.GRID_SIZE + 1);
-					y /= (Preferences.GRID_SIZE + 1);
-					if(x < brush.GRID_WIDTH && y < brush.GRID_HEIGHT) {
-						brush.tile_x = x;
-						brush.tile_y = y;
-						repaint();
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					int x = e.getX() - x_offset;
+					int y = e.getY() - y_offset;
+					x /= Brush.SCALE;
+					y /= Brush.SCALE;
+					if(x % Preferences.GRID_SIZE != 0 && y % Preferences.GRID_SIZE != 0) {
+						x /= (Preferences.GRID_SIZE + 1);
+						y /= (Preferences.GRID_SIZE + 1);
+						if(x < brush.GRID_WIDTH && y < brush.GRID_HEIGHT) {
+							brush.tile_x = x;
+							brush.tile_y = y;
+							repaint();
+						}
 					}
 				}
 			}
@@ -53,7 +55,8 @@ public class BrushPanel extends BorderPanel{
 			8 + brush.image.getHeight() * Brush.SCALE + 16 + Preferences.GRID_SIZE + 8
 		);
 		setPreferredSize(size);
-		setSize(size);
+		setVisible(false);
+		setVisible(true);
 	}
 	
 	int x_offset = 0;

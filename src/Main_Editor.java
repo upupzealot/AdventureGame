@@ -7,8 +7,6 @@ import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import editor.MainFrame;
 
 import game.Game;
-import game.Scene;
-
 import util.Preferences;
 
 public class Main_Editor {
@@ -20,7 +18,7 @@ public class Main_Editor {
 		EventQueue.invokeLater(new Runnable() {
     		public void run() {
     			MainFrame.getInstance();
-				Game.getInstance().setScene(new Scene(20, 16));
+				Game.getInstance();
     			
     			try {
     				String LookAndFeelName = "Dust";
