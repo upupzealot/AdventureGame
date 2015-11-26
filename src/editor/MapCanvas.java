@@ -12,9 +12,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import game.Cell;
+import org.json.JSONObject;
 import game.Scene;
-import game.Scene.Layer;
 import util.Preferences;
 
 @SuppressWarnings("serial")
@@ -102,16 +101,20 @@ public class MapCanvas extends JPanel{
 		int y = e.getY() - y_offset;
 		x /= Brush.SCALE;	x /= Preferences.GRID_SIZE;
 		y /= Brush.SCALE;	y /= Preferences.GRID_SIZE;
-		if(x < grid_width && y < grid_height) {
-			Cell cell = scene.getLayer(LayerPanel.getCurrentLayer()).getCellAt(x, y);
+		String layer_name = LayerPanel.getCurrentLayerName();
+		if(x < grid_width && y < grid_height && layer_name != null) {
+			JSONObject cell = scene.getCellAt(x, y);
 			Brush brush = BrushPanel.getInstance().brush;
 			String tile_name = brush.getTileName();
-			if(tile_name != null && !tile_name.equals(cell.getTileName())) {
+			
+			boolean contains = cell.keySet().contains(layer_name);
+			boolean equals = contains && tile_name.equals(cell.getString(layer_name));
+			if(tile_name != null && !equals) {
 				Map<String, BufferedImage> tile_set = scene.getTileSet();
 				if(!tile_set.keySet().contains(tile_name)) {
 					tile_set.put(tile_name, brush.getTileImage());
 				}
-				cell.setTileName(tile_name);
+				cell.put(layer_name, tile_name);
 				
 				repaint();
 			}
@@ -143,15 +146,6 @@ public class MapCanvas extends JPanel{
 			g2d.drawLine(0, j * grid_size, width, j * grid_size);
 		}
 		
-		Map<String, BufferedImage> tile_set = scene.getTileSet();
-		for(int l = 0; l < scene.getLayerCount(); l++) {
-			Layer layer = scene.getLayer(l);
-		for(int i = 0; i < grid_width; i++) {
-		for(int j = 0; j < grid_height; j++) {
-				Cell cell = layer.getCellAt(i, j);
-				if(cell != null) {
-					g2d.drawImage(tile_set.get(cell.getTileName()), i * Preferences.GRID_SIZE, j * Preferences.GRID_SIZE, null);
-				}
-		}}}
+		scene.paint(g2d);
 	}
 }

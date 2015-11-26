@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
-import game.Scene;
+import org.json.JSONArray;
+
 import quick_component.BorderPanel;
 import quick_component.QuickToggleButton;
 
@@ -30,11 +31,11 @@ public class LayerPanel extends JPanel {
 		return instance;
 	}
 	
-	public static int getCurrentLayer() {
+	public static String getCurrentLayerName() {
 		return getInstance().current_layer;
 	}
 	
-	private int current_layer = 0;
+	private String current_layer = null;
 	private LayerPanel() {
 		setBorder(new TitledBorder("地图层"));
 		
@@ -45,35 +46,40 @@ public class LayerPanel extends JPanel {
 		gbc.insets = new Insets(2, 4, 2, 4);
 		gbc.fill = GridBagConstraints.BOTH;
 		
-		
 		gbc.gridy = 0;
-		Scene scene = MapCanvas.getInstance().scene;
+		JSONArray layers = MapCanvas.getInstance().scene.getLayerNames();
 		ButtonGroup group = new ButtonGroup();
-		for(int l = 0; l < scene.getLayerCount(); l++) {
-			LayerButton button = new LayerButton(scene.getLayer(l).getName(), l);
-			group.add(button.layer_button);
-			add(button, gbc);
+		for(int l = 0; l < layers.length(); l++) {
+			LayerButtonPanel button_panel = new LayerButtonPanel(layers.getString(l));
+			group.add(button_panel.select_button);
+			add(button_panel, gbc);
+			button_panel.select_button.setSelected(true);
 			
 			gbc.gridy++;
 		}
+		gbc.weighty = 1;
 		add(new JPanel(), gbc);
 	}
 	
-	class LayerButton extends BorderPanel {
-		JToggleButton layer_button;
+	class LayerButtonPanel extends BorderPanel {
+		JToggleButton select_button;
+		JCheckBox visible;
 		
-		LayerButton(String name, int l) {
-			layer_button = new QuickToggleButton(name) {
+		LayerButtonPanel(String name) {
+			select_button = new QuickToggleButton(name) {
 			@Override
 				public void onSelected() {
-					current_layer = l;
+					current_layer = name;
 				}
 			};
-			add(layer_button, BorderLayout.CENTER);
-			add(new JCheckBox(), BorderLayout.WEST);
+			visible = new JCheckBox();
+			visible.setSelected(true);
+			add(select_button, BorderLayout.CENTER);
+			add(visible, BorderLayout.WEST);
 			
-			setPreferredSize(new Dimension(0, 60));
-			setMinimumSize(new Dimension(0, 40));
+			Dimension size = new Dimension(160, 40);
+			setPreferredSize(size);
+			setMinimumSize(size);
 		}
 	}
 }
