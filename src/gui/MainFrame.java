@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import util.Preferences;
 
 @SuppressWarnings("serial")
-public class MainFrame extends StandaloneWindow{
+public class MainFrame extends StandaloneWindow {
 	private static MainFrame instance;
 	/**
 	 * 获得主窗口单例实例
@@ -18,7 +18,6 @@ public class MainFrame extends StandaloneWindow{
 		}
 		return instance;
 	}
-	
 	
 	/**
 	 * 布局

@@ -35,6 +35,9 @@ public class MapPanel extends BorderPanel {
 		paint_panel.add(layer_panel, BorderLayout.CENTER);
 		add(paint_panel, BorderLayout.WEST);
 		
+		JPanel control_panel = new ControlPanel();
+		add(control_panel, BorderLayout.EAST);
+		
 		JScrollPane scroll = new JScrollPane(MapCanvas.getInstance());
 		scroll.getVerticalScrollBar().setUnitIncrement(16);
 		scroll.getHorizontalScrollBar().setUnitIncrement(16);

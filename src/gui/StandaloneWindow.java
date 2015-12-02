@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 @SuppressWarnings("serial")
-public abstract class StandaloneWindow extends JFrame{
+public abstract class StandaloneWindow extends JFrame {
 	/**
 	 * 构造方法
 	 */
