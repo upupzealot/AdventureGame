@@ -1,8 +1,7 @@
 package util;
 import java.io.IOException;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.luaj.vm2.LuaValue;
 
 public class Preferences {
 	/**
@@ -29,12 +28,11 @@ public class Preferences {
 	/**
 	 * 读取Preferences
 	 * @throws IOException 
-	 * @throws JSONException 
 	 */
-	public static void read() throws JSONException, IOException {
-		JSONObject preferences = IO.read_json_object("/prefrences.json");
-		SCALE = preferences.getInt("SCALE");
-		WINDOW_GRID_WIDTH = preferences.getInt("WINDOW_GRID_WIDTH");
-		WINDOW_GRID_HEIGHT = preferences.getInt("WINDOW_GRID_HEIGHT");
+	public static void read() throws IOException {
+		LuaValue preferences = IO.read_lua_value("/prefrences.lua");
+		SCALE = preferences.get("SCALE").toint();
+		WINDOW_GRID_WIDTH = preferences.get("WINDOW_GRID_WIDTH").toint();
+		WINDOW_GRID_HEIGHT = preferences.get("WINDOW_GRID_HEIGHT").toint();
 	}
 }

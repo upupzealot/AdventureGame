@@ -7,33 +7,38 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.json.JSONObject;
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
 public class IO {
+	private static Globals globals = JsePlatform.standardGlobals();
 	/**
-	 * 从JSON文件读取对象
+	 * 从LUA文件读取LuaValue对象
 	 * @param path 文件存放的路径。
 	 * 首先作为基于res/data目录的相对路径查找，若没有，则作为绝对路径查找
-	 * @return 读取的JSON对象
+	 * @return 读取的LuaValue对象
 	 * @throws IOException 没有找到该文件
 	 */
-	public static JSONObject read_json_object(String path) {
-		File json_file = new File(Preferences.RES_FOLDER + "data/" + path);
-		if(!json_file.exists()) {
-			json_file = new File(path);
+	public static LuaValue read_lua_value(String path) {
+		File lua_file = new File(Preferences.RES_FOLDER + "data/" + path);
+		if(!lua_file.exists()) {
+			lua_file = new File(path);
 		}
 		
-		Long file_length = json_file.length();
+		Long file_length = lua_file.length();
 		byte[] content = new byte[file_length.intValue()];
 		
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(json_file);
+			fis = new FileInputStream(lua_file);
 			fis.read(content);
 			fis.close();
 		} catch (Exception e) { throw new RuntimeException(e); }
 
-		return new JSONObject(new String(content));
+		String lua_string = "do local result = " + new String(content) + "return result end";
+		
+		return globals.load(lua_string).call();
 	}
 	
 	/**
