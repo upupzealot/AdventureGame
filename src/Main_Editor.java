@@ -10,7 +10,7 @@ import game.Game;
 import util.Preferences;
 
 public class Main_Editor {
-	public static void main(String[] agrs) {
+	public static void main(String[] args) {
 		try {
 			Preferences.read();
 		} catch (Exception e) { e.printStackTrace(); }

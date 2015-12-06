@@ -12,7 +12,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import org.json.JSONObject;
+import org.luaj.vm2.LuaValue;
+
 import game.Scene;
 import util.Preferences;
 
@@ -103,18 +104,18 @@ public class MapCanvas extends JPanel{
 		y /= Brush.SCALE;	y /= Preferences.GRID_SIZE;
 		String layer_name = LayerPanel.getCurrentLayerName();
 		if(x < grid_width && y < grid_height && layer_name != null) {
-			JSONObject cell = scene.getCellAt(x, y);
+			LuaValue cell = scene.getCellAt(x + 1, y + 1);
 			Brush brush = BrushPanel.getInstance().brush;
 			String tile_name = brush.getTileName();
 			
-			boolean contains = cell.keySet().contains(layer_name);
-			boolean equals = contains && tile_name.equals(cell.getString(layer_name));
+			boolean contains = cell.get(layer_name).isnil();
+			boolean equals = contains && tile_name.equals(cell.get(layer_name).toString());
 			if(tile_name != null && !equals) {
 				Map<String, BufferedImage> tile_set = scene.getTileSet();
 				if(!tile_set.keySet().contains(tile_name)) {
 					tile_set.put(tile_name, brush.getTileImage());
 				}
-				cell.put(layer_name, tile_name);
+				cell.set(layer_name, tile_name);
 				
 				repaint();
 			}

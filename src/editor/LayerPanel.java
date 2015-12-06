@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
-import org.json.JSONArray;
+import org.luaj.vm2.LuaValue;
 
 import quick_component.BorderPanel;
 import quick_component.QuickToggleButton;
@@ -47,10 +47,10 @@ public class LayerPanel extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		
 		gbc.gridy = 0;
-		JSONArray layers = MapCanvas.getInstance().scene.getLayerNames();
+		LuaValue layers = MapCanvas.getInstance().scene.getLayerNames();
 		ButtonGroup group = new ButtonGroup();
 		for(int l = 0; l < layers.length(); l++) {
-			LayerButtonPanel button_panel = new LayerButtonPanel(layers.getString(l));
+			LayerButtonPanel button_panel = new LayerButtonPanel(layers.get(l + 1).toString());
 			group.add(button_panel.select_button);
 			add(button_panel, gbc);
 			button_panel.select_button.setSelected(true);

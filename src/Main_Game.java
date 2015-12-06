@@ -8,7 +8,7 @@ import gui.StandaloneWindow;
 import util.Preferences;
 
 public class Main_Game {
-	public static void main(String[] agrs) {
+	public static void main(String[] args) {
 		try {
 			Preferences.read();
 		} catch (Exception e) { e.printStackTrace(); }
