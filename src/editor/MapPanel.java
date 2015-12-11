@@ -29,7 +29,7 @@ public class MapPanel extends BorderPanel {
 		JPanel paint_panel = new BorderPanel();
 		JPanel brush_panel = new BorderPanel();
 		brush_panel.setBorder(new TitledBorder("笔刷"));
-		brush_panel.add(BrushPanel.getInstance(), BorderLayout.CENTER);
+		brush_panel.add(TileBrushPanel.getInstance(), BorderLayout.CENTER);
 		paint_panel.add(brush_panel, BorderLayout.SOUTH);
 		LayerPanel layer_panel = LayerPanel.getInstance();
 		paint_panel.add(layer_panel, BorderLayout.CENTER);

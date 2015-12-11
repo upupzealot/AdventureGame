@@ -7,9 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.util.Map;
-
 import javax.swing.JPanel;
 
 import org.luaj.vm2.LuaValue;
@@ -47,7 +44,7 @@ public class MapCanvas extends JPanel{
 		height = grid_height * grid_size;
 		scene = new Scene(grid_width, grid_height);
 		
-		setPreferredSize(new Dimension(width * Brush.SCALE + 16, height * Brush.SCALE + 16));
+		setPreferredSize(new Dimension(width * TileBrush.SCALE + 16, height * TileBrush.SCALE + 16));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -100,25 +97,15 @@ public class MapCanvas extends JPanel{
 	void onDraw(MouseEvent e) {
 		int x = e.getX() - x_offset;
 		int y = e.getY() - y_offset;
-		x /= Brush.SCALE;	x /= Preferences.GRID_SIZE;
-		y /= Brush.SCALE;	y /= Preferences.GRID_SIZE;
+		x /= TileBrush.SCALE;	x /= Preferences.GRID_SIZE;
+		y /= TileBrush.SCALE;	y /= Preferences.GRID_SIZE;
 		String layer_name = LayerPanel.getCurrentLayerName();
 		if(x < grid_width && y < grid_height && layer_name != null) {
 			LuaValue cell = scene.getCellAt(x + 1, y + 1);
-			Brush brush = BrushPanel.getInstance().brush;
-			String tile_name = brush.getTileName();
+			Brush brush = TileBrushPanel.getInstance().brush;
 			
-			boolean contains = cell.get(layer_name).isnil();
-			boolean equals = contains && tile_name.equals(cell.get(layer_name).toString());
-			if(tile_name != null && !equals) {
-				Map<String, BufferedImage> tile_set = scene.getTileSet();
-				if(!tile_set.keySet().contains(tile_name)) {
-					tile_set.put(tile_name, brush.getTileImage());
-				}
-				cell.set(layer_name, tile_name);
-				
-				repaint();
-			}
+			brush.paint(cell, layer_name);
+			repaint();
 		}
 	}
 	
@@ -127,8 +114,8 @@ public class MapCanvas extends JPanel{
 	Scene scene;
 	@Override
 	public void paintComponent(Graphics g) {
-		x_offset = (getWidth() - width * Brush.SCALE) / 2;
-		y_offset = (getHeight() - height * Brush.SCALE) / 2;
+		x_offset = (getWidth() - width * TileBrush.SCALE) / 2;
+		y_offset = (getHeight() - height * TileBrush.SCALE) / 2;
 		
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(getBackground());

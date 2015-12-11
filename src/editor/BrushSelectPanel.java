@@ -55,16 +55,16 @@ public class BrushSelectPanel extends JPanel{
 	}
 	
 	class BrushSelectButton extends QuickToggleButton {
-		Brush brush;
+		TileBrush brush;
 		BrushSelectButton(String name, BufferedImage icon) {
 			super(icon);
-			brush = new Brush(name, icon);
+			brush = new TileBrush(name, icon);
 			setToolTipText(name);
 		}
 		
 		@Override
 		public void onSelected() {
-			BrushPanel.getInstance().setBrush(brush);
+			TileBrushPanel.getInstance().setBrush(brush);
 		}
 	}
 }

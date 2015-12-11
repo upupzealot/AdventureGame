@@ -12,11 +12,25 @@ import util.IO;
 import util.Preferences;
 
 public class Scene {
+	/**
+	 * 栅格宽度
+	 */
 	private int width;
+	/**
+	 * 栅格高度
+	 */
 	private int height;
+	/**
+	 * 图层(名称)组
+	 */
 	private LuaValue layers;
+	/**
+	 * 组成场景的二维栅格组
+	 */
 	private LuaValue cells;
-	
+	/**
+	 * Tile图块集合
+	 */
 	private Map<String, BufferedImage> tile_set = new HashMap<String, BufferedImage>();
 	
 	public Scene(int width, int height) {
