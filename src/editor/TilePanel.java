@@ -10,21 +10,21 @@ import quick_component.BorderPanel;
 import util.Preferences;
 
 @SuppressWarnings("serial")
-public class TileBrushPanel extends BorderPanel {
+public class TilePanel extends BorderPanel {
 	
-	private static TileBrushPanel instance;
+	private static TilePanel instance;
 	/**
 	 * 获得BrushPanel单例实例
 	 * @return BrushPanel单例
 	 */
-	static TileBrushPanel getInstance() {
+	static TilePanel getInstance() {
 		if(instance == null) {
-			instance = new TileBrushPanel();
+			instance = new TilePanel();
 		}
 		return instance;
 	}
 	
-	TileBrushPanel() {
+	TilePanel() {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import org.luaj.vm2.LuaValue;
 
+import game.Layer;
 import game.Scene;
 import util.Preferences;
 
@@ -99,12 +100,12 @@ public class MapCanvas extends JPanel{
 		int y = e.getY() - y_offset;
 		x /= TileBrush.SCALE;	x /= Preferences.GRID_SIZE;
 		y /= TileBrush.SCALE;	y /= Preferences.GRID_SIZE;
-		String layer_name = LayerPanel.getCurrentLayerName();
-		if(x < grid_width && y < grid_height && layer_name != null) {
+		Layer layer = LayerPanel.getCurrentLayer();
+		if(x >= 0 && x < grid_width && y >= 0 && y < grid_height && layer != null) {
 			LuaValue cell = scene.getCellAt(x + 1, y + 1);
-			Brush brush = TileBrushPanel.getInstance().brush;
+			Brush brush = TilePanel.getInstance().brush;
 			
-			brush.paint(cell, layer_name);
+			brush.paint(cell, layer.get("name").toString());
 			repaint();
 		}
 	}

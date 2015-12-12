@@ -16,8 +16,8 @@ import quick_component.WrapLayout;
 import util.Preferences;
 
 @SuppressWarnings("serial")
-public class BrushSelectPanel extends JPanel{
-	public BrushSelectPanel() {
+public class TileSelectPanel extends JPanel{
+	public TileSelectPanel() {
 		WrapLayout layout = new WrapLayout(FlowLayout.LEFT, 8, 16);
 		layout.setAlignOnBaseline(true);
 		setLayout(layout);
@@ -64,7 +64,7 @@ public class BrushSelectPanel extends JPanel{
 		
 		@Override
 		public void onSelected() {
-			TileBrushPanel.getInstance().setBrush(brush);
+			TilePanel.getInstance().setBrush(brush);
 		}
 	}
 }

@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 
 import org.luaj.vm2.LuaValue;
 
+import game.Layer;
 import quick_component.BorderPanel;
 import quick_component.QuickToggleButton;
 
@@ -31,11 +32,11 @@ public class LayerPanel extends JPanel {
 		return instance;
 	}
 	
-	public static String getCurrentLayerName() {
+	public static Layer getCurrentLayer() {
 		return getInstance().current_layer;
 	}
 	
-	private String current_layer = null;
+	private Layer current_layer = null;
 	private LayerPanel() {
 		setBorder(new TitledBorder("地图层"));
 		
@@ -47,10 +48,10 @@ public class LayerPanel extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		
 		gbc.gridy = 0;
-		LuaValue layers = MapCanvas.getInstance().scene.getLayerNames();
+		LuaValue layers = MapCanvas.getInstance().scene.getLayers();
 		ButtonGroup group = new ButtonGroup();
 		for(int l = 0; l < layers.length(); l++) {
-			LayerButtonPanel button_panel = new LayerButtonPanel(layers.get(l + 1).toString());
+			LayerButtonPanel button_panel = new LayerButtonPanel((Layer)layers.get(l + 1));
 			group.add(button_panel.select_button);
 			add(button_panel, gbc);
 			button_panel.select_button.setSelected(true);
@@ -65,11 +66,11 @@ public class LayerPanel extends JPanel {
 		JToggleButton select_button;
 		JCheckBox visible;
 		
-		LayerButtonPanel(String name) {
-			select_button = new QuickToggleButton(name) {
+		LayerButtonPanel(Layer layer) {
+			select_button = new QuickToggleButton(layer.get("name").toString()) {
 			@Override
 				public void onSelected() {
-					current_layer = name;
+					current_layer = layer;
 				}
 			};
 			visible = new JCheckBox();

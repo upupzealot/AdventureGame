@@ -21,7 +21,7 @@ public class Scene {
 	 */
 	private int height;
 	/**
-	 * 图层(名称)组
+	 * 图层组
 	 */
 	private LuaValue layers;
 	/**
@@ -38,8 +38,8 @@ public class Scene {
 		this.height = height;
 		
 		layers = new LuaTable();
-		layers.set(1, "background");
-		layers.set(2, "objects");
+		layers.set(1, new Layer("background", Layer.TILE));
+		layers.set(2, new Layer("objects", Layer.OBJECT));
 		
 		cells = new LuaTable();
 		for(int i = 1; i <= width; i++) {
@@ -66,7 +66,7 @@ public class Scene {
 		return tile_set;
 	}
 	
-	public LuaValue getLayerNames() {
+	public LuaValue getLayers() {
 		return layers;
 	}
 	
@@ -75,11 +75,11 @@ public class Scene {
 	}
 	
 	public void paint(Graphics2D g2d) {
-		LuaValue layer_names = getLayerNames();
-		for(int l = 1; l <= layer_names.length(); l++) {
+		LuaValue layers = getLayers();
+		for(int l = 1; l <= layers.length(); l++) {
 		for(int i = 1; i <= width; i++) {
 		for(int j = 1; j <= height; j++) {
-			LuaValue layer_name = layer_names.get(l);
+			LuaValue layer_name = layers.get(l).get("name");
 			LuaValue cell = getCellAt(i, j);
 			if(cell.get(layer_name).isnil()) {
 				continue;
